@@ -283,10 +283,6 @@ auth_required(); // Verifica sesión activa, redirige a login.php si no está au
                 <i data-lucide="file-text"></i>
                 <span class="sidebar-link-text">BLOG / NOTICIAS</span>
             </a>
-            <a href="testimonios.php"   class="admin-nav-link" data-label="TESTIMONIOS">
-                <i data-lucide="message-square"></i>
-                <span class="sidebar-link-text">TESTIMONIOS</span>
-            </a>
             <a href="empleados.php"     class="admin-nav-link" data-label="EMPLEADOS">
                 <i data-lucide="users"></i>
                 <span class="sidebar-link-text">EMPLEADOS</span>
@@ -294,10 +290,6 @@ auth_required(); // Verifica sesión activa, redirige a login.php si no está au
             <a href="configuracion.php" class="admin-nav-link" data-label="CONFIG">
                 <i data-lucide="settings"></i>
                 <span class="sidebar-link-text">CONFIGURACIÓN</span>
-            </a>
-            <a href="legales.php"       class="admin-nav-link" data-label="LEGALES">
-                <i data-lucide="shield"></i>
-                <span class="sidebar-link-text">TEXTOS LEGALES</span>
             </a>
         <?php endif; ?>
 
