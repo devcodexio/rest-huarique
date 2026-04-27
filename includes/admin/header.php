@@ -1,13 +1,19 @@
 <?php
 require_once __DIR__ . '/../../config/middleware.php';
 auth_required(); // Verifica sesión activa, redirige a login.php si no está autenticado
+// Fetch Branding Config
+$site_name = 'HUARIQUE';
+try {
+    $conf = db_get_one("SELECT valor FROM public.configuraciones WHERE clave = 'site_name'");
+    if ($conf) $site_name = strtoupper($conf['valor']);
+} catch (Exception $e) {}
 ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ESTACIÓN_ALFA - Pollería Huarique OS</title>
+    <title>ESTACIÓN_ALFA - <?= $site_name ?> OS</title>
     <!-- CSS -->
     <link rel="stylesheet" href="../css/style.css">
     <!-- Lucide Icons -->
@@ -34,7 +40,7 @@ auth_required(); // Verifica sesión activa, redirige a login.php si no está au
             left: 0; top: 0;
             background: rgba(10, 10, 11, 0.98);
             border-right: 2px solid var(--primary);
-            padding: 25px 15px;
+            padding: 0;
             z-index: 1001;
             box-shadow: 10px 0 30px rgba(0,0,0,1);
             overflow-y: auto;
@@ -48,7 +54,6 @@ auth_required(); // Verifica sesión activa, redirige a login.php si no está au
         /* Collapsed state */
         .admin-sidebar.collapsed {
             width: var(--sidebar-collapsed-width);
-            padding: 25px 8px;
         }
 
         /* Branding (logo + label) */
@@ -61,7 +66,8 @@ auth_required(); // Verifica sesión activa, redirige a login.php si no está au
         }
         .admin-sidebar.collapsed .sidebar-brand-label,
         .admin-sidebar.collapsed .sidebar-section-label,
-        .admin-sidebar.collapsed .sidebar-link-text {
+        .admin-sidebar.collapsed .sidebar-link-text,
+        .admin-sidebar.collapsed .sidebar-header h1 {
             opacity: 0;
             width: 0;
             pointer-events: none;
@@ -79,7 +85,8 @@ auth_required(); // Verifica sesión activa, redirige a login.php si no está au
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 18px;
+            margin: 15px;
+            width: calc(100% - 30px);
             transition: all 0.3s;
         }
         .sidebar-toggle:hover { border-color: var(--primary); color: var(--primary); background: rgba(255,71,87,0.08); }
@@ -99,7 +106,7 @@ auth_required(); // Verifica sesión activa, redirige a login.php si no está au
         }
         .admin-main.collapsed { margin-left: var(--sidebar-collapsed-width); }
 
-        .admin-nav { margin-top: 20px; }
+        .admin-nav { margin-top: 10px; padding: 0 15px; }
         .admin-nav-link {
             display: flex;
             align-items: center;
@@ -236,15 +243,16 @@ auth_required(); // Verifica sesión activa, redirige a login.php si no está au
 
 <aside class="admin-sidebar" id="adminSidebar">
 
+    <div class="sidebar-header" style="padding: 30px; text-align: center; border-bottom: 1px solid var(--glass-border); position: relative; overflow: hidden;">
+        <div style="font-size: 0.6rem; letter-spacing: 4px; color: var(--primary); font-weight: 900; margin-bottom: 5px;">ALPHA_STATION</div>
+        <h1 style="font-size: 1.5rem; letter-spacing: 2px; font-weight: 900; margin: 0; color: white; text-shadow: 0 0 15px var(--primary-glow);"><?= $site_name ?></h1>
+        <div style="position: absolute; bottom: 0; left: 0; width: 100%; height: 2px; background: linear-gradient(90deg, transparent, var(--primary), transparent);"></div>
+    </div>
+
     <!-- Toggle button -->
     <button class="sidebar-toggle" id="sidebarToggle" title="Colapsar menú">
         <i data-lucide="chevrons-left"></i>
     </button>
-
-    <div class="sidebar-brand-label" style="font-size: 0.55rem; color: var(--primary); margin-bottom: 6px; letter-spacing: 3px; font-weight: 900;">ALPHA_STATION</div>
-    <div class="logo neon-glow sidebar-brand-label" style="font-size: 1.6rem; margin-bottom: 10px;">
-        HUARIQUE<span>OS</span>
-    </div>
 
     <nav class="admin-nav">
         <a href="index.php"    class="admin-nav-link" data-label="INICIO">
@@ -304,7 +312,7 @@ auth_required(); // Verifica sesión activa, redirige a login.php si no está au
 
 <main class="admin-main" id="adminMain">
     <div class="admin-topbar">
-        <h3>ADMINISTRADOR HUARIQUE</h3>
+        <h3>ADMINISTRADOR <?= $site_name ?></h3>
         <div style="display: flex; align-items: center; gap: 20px;">
             <div style="text-align: right;">
                 <div style="font-size: 0.8rem; font-weight: 900; color: white;">OPERADOR: <?= strtoupper($_SESSION['admin_user']) ?></div>

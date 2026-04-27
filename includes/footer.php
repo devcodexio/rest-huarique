@@ -1,4 +1,13 @@
 <?php
+// Fetch Branding Config
+$site_name = 'HUARIQUE';
+if (function_exists('db_get_one')) {
+    try {
+        $conf = db_get_one("SELECT valor FROM public.configuraciones WHERE clave = 'site_name'");
+        if ($conf) $site_name = strtoupper($conf['valor']);
+    } catch (Exception $e) {}
+}
+
 // Fetch footer info
 try {
     $footer_phones = db_get_all("SELECT * FROM public.telefonos_restaurante ORDER BY id LIMIT 3");
@@ -13,8 +22,8 @@ try {
     <div class="container">
         <div class="footer-grid">
             <div class="footer-col">
-                <a href="#" class="logo neon-glow">HUARIQUE<span>RESTAURANTE</span></a>
-                <p style="margin-top: 20px; color: var(--text-secondary);">Donde la tradición se encuentra con la modernidad. El mejor pollo a la brasa de Huarique.</p>
+                <a href="#" class="logo neon-glow"><?= $site_name ?></a>
+                <p style="margin-top: 20px; color: var(--text-secondary);">Donde la tradición se encuentra con la modernidad. El mejor sabor en <?= $site_name ?>.</p>
                 <?php if ($footer_address): ?>
                     <p style="margin-top: 15px; font-size: 0.9rem; color: var(--text-primary);">
                         <i data-lucide="map-pin" style="width: 16px; margin-right: 5px;"></i> <?= htmlspecialchars($footer_address['direccion']) ?>
@@ -62,7 +71,7 @@ try {
         </div>
         
         <div class="footer-bottom" style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--glass-border); padding-top: 30px; flex-wrap: wrap; gap: 20px;">
-            <p>&copy; <?= date('Y') ?> Pollería Huarique. <span style="color: var(--primary);">Sabor Futurista</span>. Todos los derechos reservados.</p>
+            <p>&copy; <?= date('Y') ?> <?= $site_name ?>. <span style="color: var(--primary);">Sabor Futurista</span>. Todos los derechos reservados.</p>
             <div style="display: flex; gap: 20px; font-size: 0.75rem;">
                 <a href="terminos.php" style="color: var(--text-secondary); text-decoration: none;">TÉRMINOS Y CONDICIONES GLOBALES</a>
                 <a href="politicas.php" style="color: var(--text-secondary); text-decoration: none;">TEXTOS LEGALES Y POLÍTICAS</a>

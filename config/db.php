@@ -59,6 +59,11 @@ try {
         $pdo->exec("ALTER TABLE public.reservas_mesa ADD COLUMN monto_adelanto numeric DEFAULT 25.00");
     }
 
+    $check_res_status = $pdo->query("SELECT column_name FROM information_schema.columns WHERE table_name='reservas_mesa' AND column_name='estado_reserva'")->fetch();
+    if (!$check_res_status) {
+        $pdo->exec("ALTER TABLE public.reservas_mesa ADD COLUMN estado_reserva varchar DEFAULT 'pendiente' CHECK (estado_reserva IN ('pendiente', 'confirmada', 'cancelada'))");
+    }
+
     $check_pago_online = $pdo->query("SELECT column_name FROM information_schema.columns WHERE table_name='pedidos' AND column_name='estado_pago_online'")->fetch();
     if (!$check_pago_online) {
         $pdo->exec("ALTER TABLE public.pedidos ADD COLUMN estado_pago_online varchar DEFAULT 'no_pagado' CHECK (estado_pago_online IN ('pagado', 'no_pagado'))");

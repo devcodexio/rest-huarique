@@ -1,9 +1,19 @@
+<?php
+// Fetch Branding Config
+$site_name = 'HUARIQUE';
+if (function_exists('db_get_one')) {
+    try {
+        $conf = db_get_one("SELECT valor FROM public.configuraciones WHERE clave = 'site_name'");
+        if ($conf) $site_name = strtoupper($conf['valor']);
+    } catch (Exception $e) {}
+}
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pollería Huarique - El Sabor que Enamora</title>
+    <title><?= $site_name ?> | POLLERÍA & RESTAURANTE</title>
     <meta name="description" content="La mejor pollería tradicional con un toque moderno en Huarique. Pollo a la brasa, carnes y más.">
     
     <!-- Google Fonts -->
@@ -23,9 +33,12 @@
 <!-- Navbar -->
 <nav class="navbar" id="navbar">
     <div class="container nav-flex">
-        <a href="index.php" class="logo neon-glow">
-            HUARIQUE<span>RESTAURANTE</span>
-        </a>
+        <div class="logo-wrapper" style="display: flex; flex-direction: column;">
+            <a href="index.php" class="logo neon-glow" style="text-decoration: none; font-size: 2rem;">
+                <?= $site_name ?>
+            </a>
+            <div style="font-size: 0.5rem; letter-spacing: 3px; color: var(--accent); font-weight: bold; margin-top: -5px;">ESTACIÓN GASTRONÓMICA</div>
+        </div>
         
         <ul class="nav-links">
             <li><a href="index.php">INICIO</a></li>
