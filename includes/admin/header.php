@@ -279,10 +279,6 @@ try {
         <?php if ($_SESSION['admin_role'] === 'admin'): ?>
             <div class="sidebar-section-label" style="font-size: 0.5rem; color: var(--text-secondary); margin: 18px 0 8px 4px; letter-spacing: 2px;">GESTIÓN AVANZADA</div>
 
-            <a href="clientes.php"      class="admin-nav-link" data-label="CLIENTES">
-                <i data-lucide="user-check"></i>
-                <span class="sidebar-link-text">CLIENTES</span>
-            </a>
             <a href="cupones.php"       class="admin-nav-link" data-label="CUPONES">
                 <i data-lucide="ticket"></i>
                 <span class="sidebar-link-text">CUPONES / PROMOS</span>
